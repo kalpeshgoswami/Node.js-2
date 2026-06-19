@@ -19,7 +19,10 @@ const newSchema = mongoose.Schema({
     },
     packageImage: {
         type: String,
-    }
+    },
+    cloudinary_id: {
+        type: String,
+    },
 },
     {
         timestamps: true

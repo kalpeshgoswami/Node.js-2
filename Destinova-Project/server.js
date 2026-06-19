@@ -34,29 +34,30 @@ app.use((error, req, res, next) => {
 
 const port = 5000;
 
-
-async function startServer(req, res, next) {
-
+async function startServer() {
     try {
-        const connect = await connectDB()
+        const connect = await connectDB();
 
         if (!connect) {
-            return console.log("failed to connect DB")
+            console.log("failed to connect DB");
+            return;
         }
+
         app.listen(port, (err) => {
-            if (err) {
+
+            if(err){
                 return console.log(err.message)
             }
-            console.log(`server running port on ${port}`)
-        })
+            
+            console.log(`server running on port ${port}`);
+        });
 
     } catch (error) {
-        return next(new httpError(error.message))
-        process.exit(1)
+        console.log(error.message);
+        process.exit(1);
     }
-
 }
 
-startServer()
+startServer();
 
 
