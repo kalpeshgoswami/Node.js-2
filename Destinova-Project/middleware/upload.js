@@ -24,6 +24,13 @@ const storage = new CloudinaryStorage({
     },
 });
 
+// const storage = new CloudinaryStorage({
+//   cloudinary,
+//   params: {
+//     folder: "destinova",
+//   },
+// });
+
 const uploads = multer({
     storage,
     limits: {
