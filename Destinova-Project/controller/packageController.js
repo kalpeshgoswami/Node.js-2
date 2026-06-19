@@ -118,10 +118,7 @@ const updatePackage = async function (req, res, next) {
 
         const allowedField = [
             "packageName",
-            "Date",
-            "PackageType",
-            "packagePrice",
-            "image",
+            "packageImage",
         ];
         const isAllowed = update.every((field) => allowedField.includes(field));
 

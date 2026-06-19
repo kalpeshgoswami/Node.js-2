@@ -15,7 +15,7 @@ const newSchema = mongoose.Schema({
     },
     endDate: {
         type: Date,
-        required: true
+        // required: true
     },
     packageImage: {
         type: String,
