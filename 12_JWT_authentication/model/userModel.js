@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema(
                 }
             }
         },
-         tokens: [
+        tokens: [
             {
                 token: {
                     type: String,
@@ -108,6 +108,22 @@ userSchema.methods.generateAuthToken = async function () {
     } catch (error) {
         throw new Error(error.message)
     }
+}
+
+userSchema.method.toJSON = function () {
+
+    const user = this;
+
+    const userObject = user.toObject();
+
+    delete userObject.password;
+
+    delete userObject.tokens;
+
+    delete userObject.__v
+
+    return userObject
+
 }
 
 const userModel = mongoose.model("user", userSchema);

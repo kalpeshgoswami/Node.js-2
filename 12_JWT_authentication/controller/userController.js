@@ -177,4 +177,7 @@ const AllLogOut = async function (req, res, next) {
     }
 
 }
+
+
+
 export default { add, getAll, login, authLogin, authDelete, AuthUpdate, logOut, AllLogOut }
