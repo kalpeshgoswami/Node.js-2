@@ -8,9 +8,9 @@ router.post("/add", userController.addUser);
 
 router.get("/getAll", userController.getAllUser);
 
-router.post("/login", userController.login)
+router.post("/login", userController.login);
 
-router.post("/authlogin", auth, userController.authLogin);
+router.post("/authLogin", auth, userController.authLogin);
 
 router.delete("/authDelete", auth, userController.authDelete);
 
@@ -18,4 +18,4 @@ router.get("/logOut", auth, userController.logOut);
 
 router.get("/AllLogOut", auth, userController.AllLogOut);
 
-export default router
+export default router;

@@ -9,9 +9,8 @@
   },
   "name": "jwt_authentication_practice",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple JWT Authentication API built using **Node.js**, **Express.js**, **MongoDB**, and **JWT (JSON Web Token)**. This project demonstrates user registration, login, protected routes, authentication middleware, and logout functionality.",
   "main": "server.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",

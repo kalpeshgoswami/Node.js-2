@@ -35,7 +35,7 @@ async function startServer() {
         const connect = await connectDB();
 
         if (!connect) {
-            return next(new httpError("failed to connect DB", 500))
+            throw next(new httpError("failed to connect DB", 500))
         }
         app.listen(port, (err) => {
             if (err) {
