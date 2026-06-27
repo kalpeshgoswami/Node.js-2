@@ -141,14 +141,8 @@ nodemon server.js
 ```
 /user/authlogin
 ```
+<img width="1104" height="968" alt="image" src="https://github.com/user-attachments/assets/8972a9c2-c5fb-46d1-b81f-41f3643ab18e" />
 
-Headers
-
-```
-Authorization: Bearer <JWT_TOKEN>
-```
-
----
 
 ## Logout
 
@@ -157,12 +151,8 @@ Authorization: Bearer <JWT_TOKEN>
 ```
 /user/logOut
 ```
+<img width="1083" height="757" alt="image" src="https://github.com/user-attachments/assets/2e94a918-5eab-4918-8b18-df79e586d928" />
 
-Headers
-
-```
-Authorization: Bearer <JWT_TOKEN>
-```
 
 ---
 
@@ -174,11 +164,8 @@ Authorization: Bearer <JWT_TOKEN>
 /user/AllLogout
 ```
 
-Headers
+<img width="1086" height="703" alt="image" src="https://github.com/user-attachments/assets/4310a3a9-b76b-4ed0-a348-ee0b80ed0721" />
 
-```
-Authorization: Bearer <JWT_TOKEN>
-```
 
 ---
 
@@ -202,18 +189,3 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIs...
 - bcryptjs
 - dotenv
 - nodemon
-
----
-
-## 👨‍💻 Author
-
-**Kalpesh Goswami**
-
-- GitHub: https://github.com/kalpeshgoswami
-- LinkedIn: https://linkedin.com/in/kalpeshgoswami
-
----
-
-## ⭐ Support
-
-If you found this project helpful, don't forget to give it a ⭐ on GitHub.
