@@ -18,4 +18,6 @@ router.get("/logOut", auth, userController.logOut);
 
 router.get("/AllLogOut", auth, userController.AllLogOut);
 
+router.patch("/update", auth, userController.updateUser);
+
 export default router;

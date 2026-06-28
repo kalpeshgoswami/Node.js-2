@@ -149,4 +149,38 @@ const AllLogOut = async function (req, res, next) {
 
 }
 
-export default { addUser, getAllUser, login, authLogin, authDelete, logOut, AllLogOut }
+
+// update
+
+const updateUser = async (req, res, next) => {
+    try {
+
+        const user = req.user;
+
+        const updates = Object.keys(req.body);
+
+        const allowedField = ["name", "password"];
+
+        const isValidUpdates = updates.every((field) =>
+            allowedField.includes(field),
+        )
+
+        if (!isValidUpdates) {
+            return next(new httpError("only allowed field acn be update", 400));
+        }
+
+        updates.forEach((update) => {
+            user[update] = req.body[update];
+        });
+
+        await user.save();
+
+        res.status(200).json({ success: true, message: "user data updated successfully", user });
+
+    } catch (error) {
+        return next(new HttpError(error.message, 500));
+
+    }
+}
+
+export default { addUser, getAllUser, login, authLogin, authDelete, logOut, AllLogOut, updateUser }
