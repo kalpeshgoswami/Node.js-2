@@ -1,6 +1,6 @@
 import passport from "passport";
 import googlePassport from "passport-google-oauth20"
-import user from "../model/userModel.js"
+import User from "../model/userModel.js"
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -19,7 +19,7 @@ passport.use(
 
             try {
 
-                const user = await User.findOne({ googleID: profile.id });
+                const user = await User.findOne({ googleId: profile.id });
 
                 if (!user) {
                     const newUser = await User.create({
@@ -27,9 +27,9 @@ passport.use(
                         name: profile.displayName,
                         email: profile.emails[0]?.value,
                     })
-                    done(null, newUser)
+                    return done(null, newUser)
                 }
-                done(null, user);
+                return done(null, user);
 
             } catch (error) {
 
