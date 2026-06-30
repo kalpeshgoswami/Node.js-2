@@ -3,11 +3,26 @@ import httpError from "./middleware/httpError.js"
 import connectDB from "./config/DB.js";
 import router from "./Router/router.js";
 import dotenv from "dotenv";
+import session from "express-session";
+import passport from "passport";
 
 dotenv.config({ path: "./.env" })
 
 const app = express()
 
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        secure: false,
+        maxAge: 24 * 60 * 90 * 100
+    }
+}))
+
+app.use(passport.initialize());
+app.use(passport.session())
+app.set("view engine", "ejs")
 app.use(express.json());
 app.use("/auth", router);
 app.set("view engine", "ejs")
@@ -39,7 +54,7 @@ async function startServer() {
         const connect = await connectDB();
 
         if (!connect) {
-        
+
 
             throw new Error("Failed to connect DB");
         }
