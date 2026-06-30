@@ -1,7 +1,7 @@
-import expresse from "express"
+import express from "express"
 import passport from "../config/passport.js";
 
-const router = expresse.Router();
+const router = express.Router();
 
 router.get("/login", (req, res, next) => {
     res.render("login")

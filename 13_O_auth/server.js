@@ -25,7 +25,7 @@ app.use((error, req, res, next) => {
         return next(error);
     }
 
-    res.status(error.code || 500).json({
+    res.status(error.statusCode || 500).json({
         message: error.message || "Internal Server Error"
     });
 });
@@ -39,8 +39,11 @@ async function startServer() {
         const connect = await connectDB();
 
         if (!connect) {
-            return next(new httpError("failed to connect DB"))
+        
+
+            throw new Error("Failed to connect DB");
         }
+
         app.listen(port, (err) => {
             if (err) {
                 return console.log(err.message);
