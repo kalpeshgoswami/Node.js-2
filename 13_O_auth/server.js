@@ -1,7 +1,8 @@
 import express from "express";
 import httpError from "./middleware/httpError.js"
 import connectDB from "./config/DB.js";
-import router from "./Router/router.js";
+import router from "./Router/authRouter.js";
+import profileRouter from "./Router/profileRouter.js";
 import dotenv from "dotenv";
 import session from "express-session";
 import passport from "passport";
@@ -16,7 +17,7 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         secure: false,
-        maxAge: 24 * 60 * 90 * 100
+        maxAge: 24 * 60 * 90 * 1000
     }
 }))
 
@@ -24,11 +25,15 @@ app.use(passport.initialize());
 app.use(passport.session())
 app.set("view engine", "ejs")
 app.use(express.json());
+
 app.use("/auth", router);
-app.set("view engine", "ejs")
+
+app.use("/profile", profileRouter);
+
+
 
 app.get("/", (req, res, next) => {
-    res.render("home");
+    res.render("home", { user: req.user });
 })
 
 app.use((req, res, next) => {
