@@ -1,10 +1,15 @@
+// Import third party modules
+
 import express from "express";
+import dotenv from "dotenv"
+
+// dotenv config
+dotenv.config({ path: "./.env" })
+
+// local modules
 import HttpError from "./middleware/httpError.js";
 import connectDB from "./config/db.js";
-import dotenv from "dotenv"
 import router from "./router/router.js";
-
-dotenv.config({ path: "./.env" })
 
 const app = express();
 
@@ -12,14 +17,17 @@ app.use(express.json());
 
 app.use("/user", router);
 
+// server check
 app.use("/", (req, res) => {
     res.json({ message: "hello from server" })
 });
 
+// if route not found
 app.use((req, res, next) => {
     return next(new HttpError("requested route not found", 404))
 })
 
+//  centralize error handling
 app.use((error, req, res, next) => {
     if (res.headersSent) {
         return next(new HttpError(error.message))
