@@ -2,10 +2,15 @@ import express from "express";
 import HttpError from "./middleware/httpError.js";
 import connectDB from "./config/db.js";
 import dotenv from "dotenv"
+import router from "./router/router.js";
 
-dotenv.config({path:"./.env"})
+dotenv.config({ path: "./.env" })
 
-const app = express()
+const app = express();
+
+app.use(express.json());
+
+app.use("/user", router);
 
 app.use("/", (req, res) => {
     res.json({ message: "hello from server" })
