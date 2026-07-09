@@ -8,9 +8,9 @@ const add = async (req, res, next) => {
 
     try {
 
-        const { name, email, password } = req.body;
+        const { name, email, password, address, phone } = req.body;
 
-        const newUser = new User({ name, email, password });
+        const newUser = new User({ name, email, password, address, phone });
 
         await newUser.save();
 

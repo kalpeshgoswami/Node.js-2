@@ -29,6 +29,24 @@ const userSchema = new mongoose.Schema({
         }
     },
 
+    role: {
+        type: String,
+        enum: ["customer", "provider"],
+        default: "customer"
+    },
+
+    phone: {
+        type: String,
+        required: true
+    },
+
+    isVerified: {
+        type: String,
+    },
+    address: {
+        type: String,
+    },
+
     tokens: [{
         token: {
             type: String,
