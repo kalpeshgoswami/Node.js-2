@@ -53,11 +53,14 @@ const login = async (req, res, next) => {
 
         const user = await User.findByCredentials(email, password);
 
+
         if (!user) {
             return next(new HttpError("unable to loggin", 404))
         }
 
-        res.status(200).json({ success: true, message: "loggin successfully", user })
+        const token = await user.generateAuthToken()
+
+        res.status(200).json({ success: true, message: "loggin successfully", user, token })
 
     } catch (error) {
         return next(new HttpError(error.message))
