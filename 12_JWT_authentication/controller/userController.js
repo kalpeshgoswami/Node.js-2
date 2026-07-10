@@ -78,7 +78,7 @@ const authLogin = async function (req, res, next) {
         const user = req.user;
 
         if (!user) {
-            return next(new httpError("unableto login", 401));
+            return next(new httpError("unable to login", 401));
         }
 
         res.status(200).json({ success: true, user });

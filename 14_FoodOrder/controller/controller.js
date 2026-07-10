@@ -33,7 +33,7 @@ const AllUser = async (req, res, next) => {
             return next(new HttpError("User data is not found", 404))
         }
 
-        res.status(200).json({ success: true, message: "user data found successfull", total: userData.length, userData })
+        res.status(200).json({ success: true, message: "user data found successfully", total: userData.length, userData })
 
     } catch (error) {
 
@@ -43,7 +43,25 @@ const AllUser = async (req, res, next) => {
 
 }
 
-// loggin user 
+// delete
+
+const deleteAllUsers = async (req, res, next) => {
+    try {
+
+        const result = await User.deleteMany({});
+
+        res.status(200).json({
+            success: true,
+            message: "All users deleted successfully",
+            deletedCount: result.deletedCount
+        });
+
+    } catch (error) {
+        return next(new HttpError(error.message));
+    }
+};
+
+// login user 
 
 const login = async (req, res, next) => {
 
@@ -55,12 +73,12 @@ const login = async (req, res, next) => {
 
 
         if (!user) {
-            return next(new HttpError("unable to loggin", 404))
+            return next(new HttpError("unable to login", 404))
         }
 
         const token = await user.generateAuthToken()
 
-        res.status(200).json({ success: true, message: "loggin successfully", user, token })
+        res.status(200).json({ success: true, message: "login successfully", user, token })
 
     } catch (error) {
         return next(new HttpError(error.message))
@@ -68,4 +86,19 @@ const login = async (req, res, next) => {
 
 }
 
-export default { add, AllUser, login }
+const authLogin = async function (req, res, next) {
+    try {
+        const user = req.user;
+
+        if (!user) {
+            return next(new httpError("unable to login", 401));
+        }
+
+        res.status(200).json({ success: true, user });
+
+    } catch (error) {
+        next(new httpError(error.message));
+    }
+}
+
+export default { add, AllUser, login, deleteAllUsers, authLogin }

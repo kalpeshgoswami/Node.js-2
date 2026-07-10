@@ -2,7 +2,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs"
 import httpError from "../middleware/httpError.js"
-import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken"
 
 // mongoose Schema
 const userSchema = new mongoose.Schema({
@@ -76,13 +76,13 @@ userSchema.statics.findByCredentials = async function (email, password) {
         const user = await this.findOne({ email });
 
         if (!user) {
-            throw new Error("unable to loggin")
+            throw new Error("unable to login")
         }
 
         const isMatch = await bcrypt.compare(password, user.password)
 
         if (!isMatch) {
-            throw new Error("unable to loggin")
+            throw new Error("unable to login")
         }
 
         return user;
