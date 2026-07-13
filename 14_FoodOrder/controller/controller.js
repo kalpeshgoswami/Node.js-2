@@ -101,4 +101,17 @@ const authLogin = async function (req, res, next) {
     }
 }
 
-export default { add, AllUser, login, deleteAllUsers, authLogin }
+const authDelete = async function (req, res, next) {
+
+    try {
+        const user = req.user;
+
+        await user.deleteOne()
+
+        res.status(200).json({ success: true, message: "user delete successfully" })
+    } catch (error) {
+        return next(new HttpError(error.message))
+    }
+}
+
+export default { add, AllUser, login, deleteAllUsers, authLogin, authDelete }

@@ -8,13 +8,14 @@ const router = express.Router();
 
 router.post("/add", validate(userSchema), controller.add);
 
-router.get("/allData", controller.AllUser)
+router.get("/allData", controller.AllUser);
 
-router.post("/login", controller.login)
+router.post("/login", controller.login);
 
-router.delete("/deleteAllUsers",controller.deleteAllUsers)
+router.delete("/deleteAllUsers", controller.deleteAllUsers);
 
-router.post("/authLogin",auth,controller.authLogin)
+router.post("/authLogin", auth, controller.authLogin);
 
+router.delete("/authDelete", auth, controller.authDelete);
 
 export default router;
