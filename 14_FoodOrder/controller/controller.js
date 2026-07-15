@@ -86,6 +86,8 @@ const login = async (req, res, next) => {
 
 }
 
+// Auth Login
+
 const authLogin = async function (req, res, next) {
     try {
         const user = req.user;
@@ -101,6 +103,29 @@ const authLogin = async function (req, res, next) {
     }
 }
 
+// logout User
+
+const logOut = async function (req, res, next) {
+
+    try {
+
+        const user = req.user;
+
+        user.tokens = user.tokens.filter((t) => {
+            t.token != req.token
+        });
+
+        await user.save
+
+        res.status(201).json({ success: true, message: "user logout successfully" })
+
+    } catch (error) {
+        return next(new httpError(error.message))
+    }
+}
+
+// Delete user
+
 const authDelete = async function (req, res, next) {
 
     try {
@@ -114,4 +139,36 @@ const authDelete = async function (req, res, next) {
     }
 }
 
-export default { add, AllUser, login, deleteAllUsers, authLogin, authDelete }
+// Auth update
+
+const authUpdate = async function (req, res, next) {
+
+    try {
+
+        const user = req.user;
+        const AllowedFields = ["name", "password"];
+        const updates = Object.keys(req.body);
+
+        const isValiedUpdate = updates.every((field) =>
+            AllowedFields.includes(field)
+        )
+
+        if (!isValiedUpdate) {
+            return next(new HttpError("only name and password can be updated", 400))
+        }
+
+        updates.forEach((filed) => {
+            user[filed] = req.body[filed]
+        })
+
+        await user.save()
+
+        res.status(200).json({ success: true, message: "update successfully", user })
+
+    } catch (error) {
+        return next(new HttpError(error.message))
+    }
+
+}
+
+export default { add, AllUser, login, deleteAllUsers, authLogin, authDelete, logOut, authUpdate }

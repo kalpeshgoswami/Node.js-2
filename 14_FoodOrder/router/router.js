@@ -18,4 +18,8 @@ router.post("/authLogin", auth, controller.authLogin);
 
 router.delete("/authDelete", auth, controller.authDelete);
 
+router.post("/logout", auth, controller.logOut)
+
+router.patch("/update", auth, controller.authUpdate)
+
 export default router;
