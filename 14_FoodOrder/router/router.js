@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.post("/add", validate(userSchema), controller.add);
 
-router.get("/allData", controller.AllUser);
+router.get("/allData", checkRole("admin"), controller.AllUser);
 
 router.post("/login", controller.login);
 
