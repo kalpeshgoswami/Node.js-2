@@ -10,7 +10,7 @@ const add = async (req, res, next) => {
 
         const { name, email, password, address, phone } = req.body;
 
-        const newUser = new User({ name, email, password, address, phone });
+        const newUser = new User({ name, email, password, address, phone, userImage: req.file?.path, cloudinary_id: req.file.filename });
 
         await newUser.save();
 
