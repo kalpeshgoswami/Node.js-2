@@ -2,6 +2,7 @@
 // local module
 import HttpError from "../middleware/httpError.js";
 import User from "../model/model.js";
+import cloudinary from "../config/cloudinary.js"
 
 // add user
 const add = async (req, res, next) => {
@@ -10,7 +11,7 @@ const add = async (req, res, next) => {
 
         const { name, email, password, address, phone } = req.body;
 
-        const newUser = new User({ name, email, password, address, phone });
+        const newUser = new User({ name, email, password, address, phone, userImage: req.file?.path, cloudinary_id: req.file.filename });
 
         await newUser.save();
 
@@ -146,20 +147,29 @@ const authUpdate = async function (req, res, next) {
     try {
 
         const user = req.user;
-        const AllowedFields = ["name", "address","phone"];
+        const AllowedFields = ["name", "address", "phone"];
         const updates = Object.keys(req.body);
 
-        const isValiedUpdate = updates.every((field) =>
+        const isValidUpdate = updates.every((field) =>
             AllowedFields.includes(field)
         )
 
-        if (!isValiedUpdate) {
+        if (!isValidUpdate) {
             return next(new HttpError("only name and password can be updated", 400))
         }
 
-        updates.forEach((filed) => {
-            user[filed] = req.body[filed]
-        })
+        if (req.file) {
+            if (user.cloudinary_id) {
+                await cloudinary.uploader.destroy(user.cloudinary_id)
+            }
+
+            user.userImage = req.file.path;
+            user.cloudinary_id = req.file.filename;
+        }
+
+        updates.forEach((update) => {
+            user[update] = req.body[update];
+        });
 
         await user.save()
 

@@ -47,7 +47,12 @@ const userSchema = new mongoose.Schema({
     address: {
         type: String,
     },
-
+    userImage: {
+        type: String
+    },
+    cloudinary_id: {
+        type: String
+    },
     tokens: [{
         token: {
             type: String,
@@ -121,6 +126,22 @@ userSchema.methods.generateAuthToken = async function () {
     }
 };
 
+userSchema.methods.toJSON = function () {
+
+    const user = this;
+    const userObject = user.toObject();
+
+    delete userObject.password;
+    delete userObject.cloudinary_id;
+    delete userObject._id;
+    delete userObject.createdAt;
+    delete userObject.updatedAt;
+    delete userObject.__v
+    delete userObject.tokens;
+
+    return userObject;
+
+}
 
 const User = mongoose.model("user", userSchema)
 
