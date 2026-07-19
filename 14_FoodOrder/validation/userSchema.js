@@ -1,6 +1,6 @@
 import Joi from "joi"
 
-const userSchema = Joi.object({
+export const userSchema = Joi.object({
 
     name: Joi.string().trim().min(2).max(50).required().trim().messages({
         "string.base": "Name must be a string",
@@ -48,4 +48,10 @@ const userSchema = Joi.object({
         .default("customer")
 })
 
-export default userSchema;
+export const UpdateUserSchema = userSchema
+    .fork(["name", "password", "phone", "address"], (field) => field.optional())
+    .fork(["email", "role"], (field) => field.forbidden())
+    .or("name", "password", "phone", "address")
+    .messages({
+        "object.missing": "Name, password, Phone and address any one required to update"
+    });
