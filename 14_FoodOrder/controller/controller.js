@@ -147,7 +147,7 @@ const authUpdate = async function (req, res, next) {
     try {
 
         const user = req.user;
-        const AllowedFields = ["name", "address", "phone"];
+        const AllowedFields = ["name", "address", "phone", "password"];
         const updates = Object.keys(req.body);
 
         const isValidUpdate = updates.every((field) =>
