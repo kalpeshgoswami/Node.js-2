@@ -127,17 +127,22 @@ const logOut = async function (req, res, next) {
 
 // Delete user
 
-const authDelete = async function (req, res, next) {
+const deleteUser = async function (req,res,next) {
 
-    try {
-        const user = req.user;
+    const targetedUser = req.params.id || req.user_id;
 
-        await user.deleteOne()
+    const user = await User.findById(targetedUser)
 
-        res.status(200).json({ success: true, message: "user delete successfully" })
-    } catch (error) {
-        return next(new HttpError(error.message))
+    if(!user){
+        return next(new httpError("User not found",404))
     }
+
+    if(user.cloudinary_id){
+        await cloudinary.uploader.destroy(user.cloudinary_id)
+    }
+
+    await user.deleteOne()
+    
 }
 
 // Auth update
@@ -146,8 +151,16 @@ const authUpdate = async function (req, res, next) {
 
     try {
 
-        const user = req.user;
+        const targetedUser = req.params.id || req.user._id;
+
+        const user = await User.findById(targetedUser)
+
+        if (!user) {
+            return next(new httpError("user not found", 404))
+        }
+
         const AllowedFields = ["name", "address", "phone"];
+
         const updates = Object.keys(req.body);
 
         const isValidUpdate = updates.every((field) =>
@@ -181,4 +194,4 @@ const authUpdate = async function (req, res, next) {
 
 }
 
-export default { add, AllUser, login, deleteAllUsers, authLogin, authDelete, logOut, authUpdate }
+export default { add, AllUser, login, deleteAllUsers, authLogin, deleteUser, logOut, authUpdate }

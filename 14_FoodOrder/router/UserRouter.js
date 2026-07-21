@@ -18,7 +18,7 @@ router.delete("/deleteAllUsers", controller.deleteAllUsers);
 
 router.post("/authLogin", auth, controller.authLogin);
 
-router.delete("/authDelete", auth, controller.authDelete);
+router.delete("/deleteUser", auth, controller.deleteUser);
 
 router.post("/logout", auth, controller.logOut)
 
