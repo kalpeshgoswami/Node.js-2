@@ -9,16 +9,25 @@ const add = async (req, res, next) => {
 
     try {
 
-        const { name, email, password, address, phone } = req.body;
+        const { name, email, password, address, phone, role } = req.body;
 
-        const newUser = new User({ name, email, password, address, phone, userImage: req.file?.path, cloudinary_id: req.file.filename });
+        const newUser = new User({
+            name,
+            role,
+            email,
+            password,
+            address,
+            phone,
+            userImage: req.file?.path,
+            cloudinary_id: req.file?.filename
+        });
 
         await newUser.save();
 
         res.status(201).json({ success: true, message: "user data successfully added", newUser })
 
     } catch (error) {
-        throw next(new HttpError(error.message))
+       return next(new HttpError(error.message, 500))
     }
 }
 
@@ -127,22 +136,22 @@ const logOut = async function (req, res, next) {
 
 // Delete user
 
-const deleteUser = async function (req,res,next) {
+const deleteUser = async function (req, res, next) {
 
     const targetedUser = req.params.id || req.user_id;
 
     const user = await User.findById(targetedUser)
 
-    if(!user){
-        return next(new httpError("User not found",404))
+    if (!user) {
+        return next(new httpError("User not found", 404))
     }
 
-    if(user.cloudinary_id){
+    if (user.cloudinary_id) {
         await cloudinary.uploader.destroy(user.cloudinary_id)
     }
 
     await user.deleteOne()
-    
+
 }
 
 // Auth update
@@ -160,6 +169,10 @@ const authUpdate = async function (req, res, next) {
         }
 
         const AllowedFields = ["name", "address", "phone"];
+
+        if (req.user.role === "admin") {
+            AllowedFields = [...AllowedFields, "isVerified"]
+        }
 
         const updates = Object.keys(req.body);
 

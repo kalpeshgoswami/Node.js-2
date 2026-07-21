@@ -44,7 +44,7 @@ export const userSchema = Joi.object({
         }),
 
     role: Joi.string()
-        .valid("customer", "provider")
+        .valid("customer", "admin")
         .default("customer")
 })
 

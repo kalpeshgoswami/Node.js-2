@@ -9,13 +9,16 @@ dotenv.config({ path: "./.env" })
 // local modules
 import HttpError from "./middleware/httpError.js";
 import connectDB from "./config/db.js";
-import router from "./router/router.js";
+import UserRouter from "./router/UserRouter.js";
+import AdminRouter from "./router/AdminRouter.js"
 
 const app = express();
 
 app.use(express.json());
 
-app.use("/user", router);
+app.use("/user", UserRouter);
+app.use("/admin", AdminRouter)
+
 
 // server check
 app.use("/", (req, res) => {
