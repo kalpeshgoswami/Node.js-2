@@ -11,6 +11,7 @@ import HttpError from "./middleware/httpError.js";
 import connectDB from "./config/db.js";
 import UserRouter from "./router/UserRouter.js";
 import AdminRouter from "./router/AdminRouter.js"
+import restaurantRouter from "./router/restaurantRouter.js";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(express.json());
 
 app.use("/user", UserRouter);
 app.use("/admin", AdminRouter)
+app.use("/restaurant",restaurantRouter)
 
 
 // server check

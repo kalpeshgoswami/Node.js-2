@@ -103,13 +103,13 @@ const authLogin = async function (req, res, next) {
         const user = req.user;
 
         if (!user) {
-            return next(new httpError("unable to login", 401));
+            return next(new HttpError("unable to login", 401));
         }
 
         res.status(200).json({ success: true, user });
 
     } catch (error) {
-        next(new httpError(error.message));
+        next(new HttpError(error.message));
     }
 }
 
@@ -130,7 +130,7 @@ const logOut = async function (req, res, next) {
         res.status(201).json({ success: true, message: "user logout successfully" })
 
     } catch (error) {
-        return next(new httpError(error.message))
+        return next(new HttpError(error.message))
     }
 }
 
@@ -143,7 +143,7 @@ const deleteUser = async function (req, res, next) {
     const user = await User.findById(targetedUser)
 
     if (!user) {
-        return next(new httpError("User not found", 404))
+        return next(new HttpError("User not found", 404))
     }
 
     if (user.cloudinary_id) {
@@ -165,7 +165,7 @@ const authUpdate = async function (req, res, next) {
         const user = await User.findById(targetedUser)
 
         if (!user) {
-            return next(new httpError("user not found", 404))
+            return next(new HttpError("user not found", 404))
         }
 
         const AllowedFields = ["name", "address", "phone"];
