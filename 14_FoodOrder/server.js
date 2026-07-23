@@ -12,6 +12,7 @@ import connectDB from "./config/db.js";
 import UserRouter from "./router/UserRouter.js";
 import AdminRouter from "./router/AdminRouter.js"
 import restaurantRouter from "./router/restaurantRouter.js";
+import restaurantModel from "./model/restaurantModel.js"
 
 const app = express();
 
@@ -19,7 +20,7 @@ app.use(express.json());
 
 app.use("/user", UserRouter);
 app.use("/admin", AdminRouter)
-app.use("/restaurant",restaurantRouter)
+app.use("/restaurant", restaurantRouter)
 
 
 // server check
@@ -43,6 +44,8 @@ app.use((error, req, res, next) => {
 
 const port = 5000;
 
+
+// Start Server
 async function startServer() {
 
     try {
@@ -68,3 +71,14 @@ async function startServer() {
     }
 }
 startServer()
+
+
+//
+
+async function check() {
+
+    const restaurantData = await restaurantModel.findById("6a61d24ca5f856a880ed0688")
+        .populate("owner")
+    console.log(restaurantData)
+}
+check()
